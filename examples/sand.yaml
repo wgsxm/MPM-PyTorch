@@ -1,0 +1,20 @@
+output_dir: './output'
+tag: 'sand'
+
+material:
+  elasticity: 'StVKElasticity'
+  plasticity: 'DruckerPragerPlasticity'
+  color: 'orange'
+
+sim:
+  num_frames: 150
+  steps_per_frame: 10
+  initial_velocity: [0.0, 0.0, -0.5]
+  boundary_conditions: 
+    - type: 'surface_collider'
+      point: [1.0, 1.0, 0.02]
+      normal: [0.0, 0.0, 1.0]
+      surface: 'sticky'
+      friction: 0.0
+      start_time: 0.0
+      end_time: 1e3

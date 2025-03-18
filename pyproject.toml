@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mpm-pytorch"
+version = "0.1.0"
+dependencies = [
+    "torch>=2.0.1",
+    "numpy<2",
+    "warp-lang==0.6.1",
+    "omegaconf",
+    "matplotlib",
+    "tqdm"
+]
+requires-python = ">=3.8"
+authors = [
+  {name = "Yuchen Lin", email="yuchenlin0612@gmail.com"}
+]
+description = "A PyTorch Implementation of MLS-MPM (Moving Least Squares Material Point Method)"
+readme = "README.md"
+license = {file = "LICENSE.txt"}
+
+[tool.setuptools.packages.find]
+include = ["mpm_pytorch*"]
