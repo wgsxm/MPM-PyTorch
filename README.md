@@ -15,8 +15,7 @@ Run the following code to try a simple example of MLS-MPM simulation. The code s
 ```bash
 python simulate.py --config examples/jelly.yaml
 ```
-<img src="assets/jelly.gif" width=400> 
-<img src="assets/sand.gif" width=400> 
+<img src="assets/jelly.gif" width=400> <img src="assets/sand.gif" width=400> 
 
 ## Usage
 Refer to `simulate.py` for more details. 
