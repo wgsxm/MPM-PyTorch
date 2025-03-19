@@ -1,0 +1,72 @@
+name: Auto Version Bump & PyPI Release
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - '**/*.py'
+      - 'pyproject.toml'
+
+jobs:
+  bump-version-publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  
+      id-token: write
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install tools
+        run: |
+          pip install build twine toml
+
+      - name: Auto bump patch version
+        id: bump
+        run: |
+          python <<EOF
+          import toml
+
+          # 读取 pyproject.toml
+          data = toml.load("pyproject.toml")
+          version = data["project"]["version"]
+
+          # 自动 bump patch (0.1.0 -> 0.1.1)
+          major, minor, patch = map(int, version.split("."))
+          patch += 1
+          new_version = f"{major}.{minor}.{patch}"
+          data["project"]["version"] = new_version
+
+          with open("pyproject.toml", "w") as f:
+              toml.dump(data, f)
+
+          print(f"::set-output name=new_version::{new_version}")
+          EOF
+
+      - name: Commit bumped version
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -am "ci: bump version to ${{ steps.bump.outputs.new_version }}"
+          git push
+
+      - name: Create Git Tag
+        run: |
+          git tag v${{ steps.bump.outputs.new_version }}
+          git push origin v${{ steps.bump.outputs.new_version }}
+
+      - name: Build package
+        run: python -m build
+
+      - name: Publish to PyPI
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+        run: |
+          twine upload dist/* --non-interactive
