@@ -4,7 +4,11 @@ The code is vectorized without any explicit loops, which makes it efficient for 
 
 [Gradient Checkpointing](https://pytorch.org/docs/stable/checkpoint.html) is highly recommended when integrating the MLS-MPM into a trainable deep learning framework. See [OmniPhysGS](https://github.com/wgsxm/omniphysgs) (ICLR 2025) for an example. 
 ## Installation
-### From source
+### From PyPI
+```bash
+pip install mpm-pytorch
+```
+### Or from source
 ```bash
 git clone https://github.com/wgsxm/MPM-PyTorch.git
 cd MPM-PyTorch
