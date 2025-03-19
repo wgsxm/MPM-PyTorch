@@ -6,6 +6,7 @@ on:
     paths:
       - '**/*.py'
       - 'pyproject.toml'
+      - '.github/workflows/pypi-auto-release.yml'
 
 jobs:
   bump-version-publish:
