@@ -45,7 +45,7 @@ for i in range(T):
     # Update stress
     stress = elasticity(F)
     # Particle to grid, grid update, grid to particle
-    grid_update = mpm_solver(x, v, C, F, stress)
+    x, v, C, F = mpm_solver(x, v, C, F, stress)
     # Plasticity correction
     F = plasticity(F)
 ```
